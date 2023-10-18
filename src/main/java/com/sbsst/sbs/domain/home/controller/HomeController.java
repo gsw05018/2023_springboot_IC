@@ -18,6 +18,11 @@ public class HomeController {
 
     @GetMapping("/admin")
     public String showAdmin() {
+
+        if(! rq.isAdmin()){
+            throw new RuntimeException("관리자가 아닙니다");
+        }
+
         return "usr/home/admin";
     }
 
