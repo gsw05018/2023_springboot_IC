@@ -121,7 +121,10 @@ public class Rq {
     }
 
     public boolean isAdmin() {
-        return member.isAdmin();
+        if(isLogout()){
+            return false;
+        }
+        return getMember().isAdmin();
         // 사용자가 관리자일시 true반환
     }
 

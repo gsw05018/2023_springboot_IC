@@ -17,8 +17,10 @@
 
         <a th:if="${@rq.logout}" href="/usr/member/login">로그인</a>
 <!--     로그아웃이 되어있을 때만 발생   -->
+        <a th:if="${@rq.login}" href="/usr/member/me">내 정보</a>
 
         <a th:if="${@rq.login}" href="javascript:;" onclick="this.nextElementSibling.submit();">로그아웃</a>
+        <a th:if="${@rq.login}" href="/admin">관리자</a>
         <form th:if="${@rq.login}" hidden th:action="|/usr/member/logout|" method="POST"></form>
 
         <span th:if="${@rq.login}" th:text="|${@rq.member.username} 님 환영합니다.|"></span>

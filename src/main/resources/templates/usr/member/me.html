@@ -9,6 +9,9 @@
         <main layout:fragment="main">
     <!--   main으로 감         -->
             마이페이지
+            <div>번호 : <span th:text="${@rq.member.id}"></span></div>
+            <div>이름 :<span th:text="${@rq.member.username}"></span></div>
+            <div>별명 : <span th:text="${@rq.member.nickname}"></span></div>
         </main>
     </body>
 </html>

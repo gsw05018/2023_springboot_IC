@@ -16,6 +16,12 @@ public class HomeController {
         return "usr/home/main";
     }
 
+    @GetMapping("/admin")
+    public String showAdmin() {
+        return "usr/home/admin";
+    }
+
+
     @GetMapping("/cookies")
     @ResponseBody
     public String showCookies() {
@@ -29,4 +35,6 @@ public class HomeController {
         return rq.getAllSessionValueAsString();
         // 세션코드 문자열로 치환해 화면 반환
     }
+
+
 }
