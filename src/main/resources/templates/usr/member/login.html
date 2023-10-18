@@ -1,0 +1,30 @@
+<html layout:decorate="~{usr/common/layout}">
+
+<head>
+    <title th:text="로그인"></title>
+</head>
+
+ <body>
+ <main layout:fragment="main">
+     <form th:action method="POST"> <!-- post 요청을 보낼 URL 설정-->
+<!--      에러메시지   -->
+         <div th:if="${param.error}">
+             <span> 올바르지 않은 회원이름 또는 비밀번호입니다</span>
+         </div>
+         <div>
+             <span>username</span>
+             <input type="text" name="username" placeholder="Username">
+         </div>
+
+         <div>
+             <span>Password</span>
+             <input type="password" name="password">
+         </div>
+         <div>
+             <button type="submit">로그인</button>
+         </div>
+     </form>
+ </main>
+ </body>
+
+</html>
