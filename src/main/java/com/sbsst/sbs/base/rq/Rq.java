@@ -52,4 +52,22 @@ public class Rq {
         return sb.toString(); // 모든 세션정보를 포함한 문자열 반환
     }
 
+    public void setCookie(String name, String Value) {
+
+        Cookie cookie = new Cookie(name, ""); // 이름과 값을 매개변수로 받아와 객체 생성
+        cookie.setPath("/"); // 경로 설정
+        resp.addCookie(cookie); // 생성된 쿠키는 resp.Cookie 메소드를 통해 응답에 추가
+
+    }
+
+    public void removeCookie(String name) {
+
+        Cookie cookie = new Cookie(name, "");
+        cookie.setMaxAge(0); // 쿠키의 유효시간을 0으로 설정하여 무효화
+        cookie.setPath("/"); // 쿠키의 경로 지정
+        resp.addCookie(cookie);
+
+
+
+    }
 }

@@ -1,5 +1,6 @@
 package com.sbsst.sbs.domain.member.controller;
 
+import com.sbsst.sbs.base.rq.Rq;
 import com.sbsst.sbs.domain.member.entity.Member;
 import com.sbsst.sbs.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -10,37 +11,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
 
+
 @Controller
-@RequestMapping("/usr/member")
+@RequestMapping("/usr/member") // 액션 URL의 공통 접두어
 @RequiredArgsConstructor
 public class MemberController {
+    private final Rq rq;
+
     private final MemberService memberService;
 
     @GetMapping("/login")
-    public String showLogin(){
+    public String showLogin() {
         return "usr/member/login";
     }
 
-    @PostMapping("login")
-    public String login(String username, String password){
+    @PostMapping("/login")
+    public String login(String username, String password) {
         Optional<Member> opMember = memberService.findByUsername(username);
-        // 주어진 username에 해당하는 member를 가져옴
-        
-        if(opMember.isEmpty()){
+
+        if ( opMember.isEmpty() ) {
             return "redirect:/usr/member/login?error";
-        } // 존재하지 않는 경우 해당경로 이동
+        }
 
         Member member = opMember.get();
-        // Optional 객체에서 Member 객체 추출
 
-        if( member.getPassword().equals(password) == false){
+        if ( member.getPassword().equals(password) == false ) {
             return "redirect:/usr/member/login?error";
-        } // 입력한 비밀번호가 오류 시 오류페이지 이동
-        return "redirect:/"; // 성공한경우 메인페이지 이동
+        }
+
+        rq.setCookie("loginedMemberId", member.getId() + "");
+        // 사용자 브라우저에 쿠키를 전송하여 저장
+        // name는 쿠키의 이름을 나타내고
+        // Value는 쿠키의 값을 나타냄
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/logout")
+    public String logout() {
+        rq.removeCookie("loginedMemberId");
+        // 쿠키의 이름을 기반으로 작동을 하기 때문에 쿠키값을 넣지 않아도 됨
+        // 쿠키를 삭제함으로써 로그아웃 기능 구현
+
+        return "redirect:/";
     }
 
     @GetMapping("/me")
-    public String showMe(){
+    public String showMe() {
         return "usr/member/me";
     }
 }
