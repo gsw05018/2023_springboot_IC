@@ -48,7 +48,7 @@ public class MemberController {
             return "redirect:/usr/member/login?error";
         }
 
-        rq.setCookie("loginedMemberId", member.getId() + "");
+        rq.setSession("loginedMemberId", member.getId() );
         // 사용자 브라우저에 쿠키를 전송하여 저장
         // name는 쿠키의 이름을 나타내고
         // Value는 쿠키의 값을 나타냄
@@ -63,7 +63,7 @@ public class MemberController {
             return "redirect:/";
         }
 
-        rq.removeCookie("loginedMemberId");
+        rq.removeSession("loginedMemberId");
         // 쿠키의 이름을 기반으로 작동을 하기 때문에 쿠키값을 넣지 않아도 됨
         // 쿠키를 삭제함으로써 로그아웃 기능 구현
 

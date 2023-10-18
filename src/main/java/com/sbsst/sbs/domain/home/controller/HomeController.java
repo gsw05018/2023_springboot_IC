@@ -37,7 +37,7 @@ public class HomeController {
     @GetMapping("/sessions")
     @ResponseBody
     public String showSessions() {
-        return rq.getAllSessionValueAsString();
+        return rq.getAllSessionValuesAsString();
         // 세션코드 문자열로 치환해 화면 반환
     }
 
