@@ -1,5 +1,6 @@
 package com.sbsst.sbs.base.rq;
 
+import com.sbsst.sbs.domain.member.entity.Member;
 import com.sbsst.sbs.domain.member.service.MemberService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,12 +18,72 @@ public class Rq {
 
     private  final HttpSession session; //  현재 세션에 대한 정보를 담고 있는 객체
 
+    private Member member = null;
+
     public Rq(MemberService memberService, HttpServletRequest req, HttpServletResponse resp, HttpSession session){
         // 의존성 주입을 통해 필요한 객체를 초기화
         this.memberService = memberService;
         this.req = req;
         this.resp = resp;
         this.session = session;
+    }
+
+    private String getCookie(String name, String defaultValue) {
+        Cookie[] cookies = req.getCookies();
+
+        if (cookies == null) {
+            return defaultValue;
+        }
+
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(name)) {
+                return cookie.getValue();
+            }
+        }
+
+        return defaultValue;
+    }
+
+    private int getCookieAsInt(String name, int defaultValue) {
+        String cookie = getCookie(name, null);
+
+        if (cookie == null) {
+            return defaultValue;
+        }
+
+        return Integer.parseInt(cookie);
+    }
+
+    private int getLoginedMemberId() {
+        return getCookieAsInt("loginedMemberId", 0);
+    }
+
+    public boolean isLogin() {
+        return getLoginedMemberId() != 0;
+    }
+
+    public boolean isLogout() {
+        return !isLogin();
+    }
+
+    public boolean isAdmin() {
+        return member.isAdmin();
+    }
+
+    public Member getMember() {
+        if ( isLogout() ) {
+            return null;
+        }
+
+        if (member == null) {
+            int loginedMemberId = getLoginedMemberId();
+
+            if (loginedMemberId != 0) {
+                member = memberService.findById(loginedMemberId).get();
+            }
+        }
+
+        return member;
     }
 
     public String getAllCookieValueAsString(){ // 현재 요청의 모든 쿠키값을 문자열로 반환
