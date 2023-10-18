@@ -30,7 +30,7 @@ public class HomeController {
     @GetMapping("/cookies")
     @ResponseBody
     public String showCookies() {
-        return rq.getAllCookieValueAsString();
+        return rq.getAllCookieValuesAsString();
         // 문자열로 치환한 쿠키코드 화면 반환
     }
 
