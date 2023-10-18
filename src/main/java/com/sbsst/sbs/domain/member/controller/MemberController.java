@@ -29,47 +29,6 @@ public class MemberController {
         return "usr/member/login";
     }
 
-    @PostMapping("/login")
-    public String login(String username, String password) {
-        Optional<Member> opMember = memberService.findByUsername(username);
-
-
-        if(rq.isLogin()){
-            throw new RuntimeException("이미 로그인 되었습니다");
-        }
-
-        if ( opMember.isEmpty() ) {
-            return "redirect:/usr/member/login?error";
-        }
-
-        Member member = opMember.get();
-
-        if ( member.getPassword().equals(password) == false ) {
-            return "redirect:/usr/member/login?error";
-        }
-
-        rq.setSession("loginedMemberId", member.getId() );
-        // 사용자 브라우저에 쿠키를 전송하여 저장
-        // name는 쿠키의 이름을 나타내고
-        // Value는 쿠키의 값을 나타냄
-
-        return "redirect:/";
-    }
-
-    @PostMapping("/logout")
-    public String logout() {
-
-        if(rq.isLogout()){
-            return "redirect:/";
-        }
-
-        rq.removeSession("loginedMemberId");
-        // 쿠키의 이름을 기반으로 작동을 하기 때문에 쿠키값을 넣지 않아도 됨
-        // 쿠키를 삭제함으로써 로그아웃 기능 구현
-
-        return "redirect:/";
-    }
-
     @GetMapping("/me")
     public String showMe() {
 

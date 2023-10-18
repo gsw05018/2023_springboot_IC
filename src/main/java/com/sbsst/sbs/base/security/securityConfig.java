@@ -15,6 +15,15 @@ import org.springframework.security.web.SecurityFilterChain;
 public class securityConfig {
     @Bean 
     SecurityFilterChain filterChain(HttpSecurity http) throws  Exception{
+        http
+                .formLogin(
+                        formLogin -> formLogin
+                                .loginPage("/usr/member/login")
+                )
+                .logout(
+                        logout -> logout
+                                .logoutUrl("/usr/member/logout")
+                );
         return http.build();
         // HttpSecurity를 매개변수로 받아 SecurityFilterChain을 반환하는 filterChain빈을 생성
         // HttpSecurity는 스프링 시큐리티 구성의 핵심이며, 애플리에키이션에 대한 보안 구성을 가능하게 함
