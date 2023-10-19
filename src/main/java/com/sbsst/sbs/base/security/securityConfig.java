@@ -15,12 +15,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity // 메서드에 엑세스를 제한하고 사용자 권한을 확인하는 기능 활성화
 @RequiredArgsConstructor // 초기화되지 않은 final 필드나 @NonNull이 붙은 필드에 대한 생성자 생성
 public class securityConfig {
-    @Bean 
+    @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws  Exception{
         http
                 .formLogin(
                         formLogin -> formLogin
                                 .loginPage("/usr/member/login")
+                                .failureHandler(new CustomSimpleUrlAuthenticationFailureHandler())
                 )
                 .logout(
                         logout -> logout
