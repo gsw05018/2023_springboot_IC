@@ -3,6 +3,7 @@ package com.sbsst.sbs.base.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration // 해당 클래스가 하나 이상의 Bean 메서드를 제공하고 스프링 컨테이너가 이 클래스를 사용하여 빈 정의 및 구성을 한다는 것을 나타냄
 @EnableWebSecurity // 스프링 애플리케이션에 웹 보안 구성을 활성화 한다는 것을 나타냄
+@EnableMethodSecurity // 메서드에 엑세스를 제한하고 사용자 권한을 확인하는 기능 활성화
 @RequiredArgsConstructor // 초기화되지 않은 final 필드나 @NonNull이 붙은 필드에 대한 생성자 생성
 public class securityConfig {
     @Bean 

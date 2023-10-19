@@ -4,6 +4,7 @@ import com.sbsst.sbs.base.rq.Rq;
 import com.sbsst.sbs.domain.member.entity.Member;
 import com.sbsst.sbs.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,10 +22,8 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/login")
+    @PreAuthorize("isAnonymous()")
     public String showLogin() {
-        if(rq.isLogin()){
-            throw new RuntimeException("이미 로그인 되었습니다");
-        }
 
         return "usr/member/login";
     }
