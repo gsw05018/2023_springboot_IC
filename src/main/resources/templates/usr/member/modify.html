@@ -1,0 +1,24 @@
+<html layout:decorate-="~{usr/common/layout}">
+
+<head >
+    <title th:text="로그인"></title>
+
+</head>
+
+<main layout:fragment="main">
+    <h1>회원정보수정</h1>
+
+    <form th:action method="POST">
+        <div>
+            <input type="password" name="password" placeholder="Password">
+        </div>
+        <div>
+            <input type="text" name="nickname" th:value="${@rq.member.nickname}">
+        </div>
+        <div>
+            <input type="submit" value="회원정보수정">
+        </div>
+    </form>
+</main>
+
+</html>

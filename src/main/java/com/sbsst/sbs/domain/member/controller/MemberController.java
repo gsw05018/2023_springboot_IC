@@ -37,4 +37,19 @@ public class MemberController {
 
         return "usr/member/me";
     }
+
+    @GetMapping("/modify")
+    @PreAuthorize("isAuthenticated()")
+    public String showModify(){
+        return "usr/member/modify";
+    }
+
+    @PostMapping("/modify")
+    @PreAuthorize("isAuthenticated()")
+    public String modify(String password, String nickname){
+        Member member = rq.getMember();
+        memberService.modify(member, password, nickname);
+
+        return "redirect:/usr/member/me";
+    }
 }
